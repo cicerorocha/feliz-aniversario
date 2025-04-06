@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <title>Feliz Aniversário</title>
@@ -14,7 +15,7 @@
     .card {
       background-color: white;
       border-radius: 20px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
       padding: 40px;
       text-align: center;
       max-width: 500px;
@@ -59,27 +60,40 @@
     }
 
     .balloon {
-      width: 30px;
-      height: 40px;
-      background-color: #ff69b4;
+      width: 40px;
+      height: 55px;
+      background-color: pink;
       border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
       position: absolute;
-      animation: float 6s infinite ease-in;
-      opacity: 0.7;
+      bottom: -60px;
+      animation: floatBalloon 8s ease-in-out infinite;
+      opacity: 0.8;
+      z-index: 5;
     }
 
-    @keyframes float {
+    .balloon::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      width: 2px;
+      height: 20px;
+      background: gray;
+      transform: translateX(-50%);
+    }
+
+    @keyframes floatBalloon {
       0% {
-        bottom: -50px;
-        transform: translateX(0);
+        transform: translateY(0) rotate(0deg);
         opacity: 0;
       }
-      50% {
-        opacity: 0.8;
+
+      20% {
+        opacity: 1;
       }
+
       100% {
-        bottom: 100%;
-        transform: translateX(50px);
+        transform: translateY(-150vh) rotate(10deg);
         opacity: 0;
       }
     }
@@ -92,6 +106,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <canvas id="confetti"></canvas>
@@ -99,7 +114,7 @@
   <div class="card">
     <h1>Feliz Aniversário!</h1>
     <button onclick="mostrarMensagem()">Clique para ver a mensagem</button>
-    <div id="nome">Taiana Manvailer </div>
+    <div id="nome">Taiana Manvailer</div>
     <p id="mensagem">
       Desejo que seu aniversário seja repleto de paz, amor e bons sentimentos.<br>
       Que cada novo ano traga ainda mais sabedoria, alegrias e realizações.<br>
@@ -116,7 +131,7 @@
       criarBaloes();
     }
 
-    // Confete (canvas)
+    // 🎉 Confete
     const canvas = document.getElementById('confetti');
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
@@ -157,19 +172,27 @@
       requestAnimationFrame(animateConfetti);
     }
 
-    // Balões
+    // 🎈 Balões
     function criarBaloes() {
-      for (let i = 0; i < 15; i++) {
+      for (let i = 0; i < 25; i++) {
         const bal = document.createElement('div');
         bal.className = 'balloon';
+
+        const hue = Math.floor(Math.random() * 360);
+        const scale = Math.random() * 0.5 + 0.8;
+
+        bal.style.backgroundColor = `hsl(${hue}, 80%, 70%)`;
         bal.style.left = `${Math.random() * window.innerWidth}px`;
-        bal.style.backgroundColor = `hsl(${Math.random() * 360}, 70%, 70%)`;
+        bal.style.transform = `scale(${scale})`;
         bal.style.animationDelay = `${Math.random() * 5}s`;
+
         document.body.appendChild(bal);
-        setTimeout(() => bal.remove(), 8000);
+
+        setTimeout(() => bal.remove(), 9000);
       }
     }
   </script>
 
 </body>
+
 </html>
